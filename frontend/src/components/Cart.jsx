@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "./Navbar";
-import Prof from "./prof";
 
 const Cart = ({ showContainer, setShowContainer }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -44,7 +42,6 @@ const Cart = ({ showContainer, setShowContainer }) => {
 
   return (
     <>
-      {/*<Prof showContainer={showContainer} />*/}
       <div className="cart-container">
         <h1>Your Cart</h1>
         <ul>
