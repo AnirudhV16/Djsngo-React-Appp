@@ -10,16 +10,41 @@ const Cart = ({ showContainer, setShowContainer }) => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await api.get("user/cart/list/", {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("No token found. User might not be authenticated.");
+          return; // Exit if no token is available
+        }
+
+        // Axios instance (`api`) automatically prefixes the base URL, so just use the endpoint
+        const response = await api.get("/user/cart/list/", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         });
-        setCartItems(response.data);
+
+        setCartItems(response.data); // Successfully fetch and update cart items
       } catch (error) {
-        console.error("Error fetching cart items", error);
+        if (error.response) {
+          // Error from the server (e.g., 4xx or 5xx status codes)
+          console.error("Error fetching cart items:", error.response.data);
+
+          // Check for specific error codes
+          if (error.response.status === 401) {
+            console.error("Unauthorized: Token might be invalid or expired.");
+            // Handle token refresh or redirect to login
+          }
+        } else if (error.request) {
+          // No response from the server
+          console.error("No response received from the server:", error.request);
+        } else {
+          // General Axios request setup error
+          console.error("Error setting up the request:", error.message);
+        }
       }
     };
+
     fetchCartItems();
   }, []);
   //console.log(`cartitems${cartItems}`)

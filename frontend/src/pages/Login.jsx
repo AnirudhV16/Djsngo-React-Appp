@@ -39,20 +39,30 @@ const Login = ({ formSubmit, setFormSubmit, setImg, img }) => {
         username: formData2.username,
         password: formData2.password,
       });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.access);
-        localStorage.setItem("refresh", data.refresh);
-        setFormSubmit(true);
-        navigate("/");
+
+      // If successful, store tokens and navigate
+      const data = response.data; // Axios automatically parses JSON
+      localStorage.setItem("token", data.access);
+      localStorage.setItem("refresh", data.refresh);
+      setFormSubmit(true);
+      navigate("/");
+    } catch (error) {
+      // Handle Axios error responses
+      if (error.response) {
+        // API responded with a status outside the 2xx range
+        setError(
+          error.response.data?.detail ||
+            "Invalid credentials. Please try again."
+        );
+      } else if (error.request) {
+        // Request was made but no response received
+        setError("Unable to connect to the server. Please try again later.");
       } else {
-        setError("Invalid credentials. Please try again.");
+        // Something else went wrong during the request setup
+        setError("Something went wrong. Please try again later.");
       }
-    } catch (err) {
-      setError("Something went wrong. Please try again later.");
     }
   };
-
   useEffect(() => {
     if (formSubmit) {
       fetchImage();

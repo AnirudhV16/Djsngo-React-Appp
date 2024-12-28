@@ -9,16 +9,42 @@ const Order = ({ showContainer, setShowContainer }) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await api.get("user/order/item/list/", {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("No token found. User might not be authenticated.");
+          return; // Exit if no token is available
+        }
+
+        // Axios instance (`api`) automatically applies base URL and other configurations
+        const response = await api.get("/user/order/item/list/", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         });
+
+        // Successfully fetch and set orders
         setOrders(response.data);
       } catch (error) {
-        console.error("Error fetching orders", error);
+        if (error.response) {
+          // Error from the server (e.g., 4xx or 5xx status codes)
+          console.error("Error fetching orders:", error.response.data);
+
+          // Handle specific status codes if necessary
+          if (error.response.status === 401) {
+            console.error("Unauthorized: Token might be invalid or expired.");
+            // Consider redirecting to login or refreshing the token here
+          }
+        } else if (error.request) {
+          // No response from the server
+          console.error("No response received from the server:", error.request);
+        } else {
+          // General Axios request setup error
+          console.error("Error setting up the request:", error.message);
+        }
       }
     };
+
     fetchOrders();
   }, []);
 
