@@ -1,9 +1,13 @@
+/** @format */
+
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:8000/";
+const api_url = "/choreo-apis/djangoreact/backend/v1";
 
 const api = axios.create({
-  baseURL,
+  baseURL: import.meta.env.VITE_API_URL
+    ? import.meta.env.VITE_API_URL
+    : api_url,
 });
 
 // Add request interceptor to handle token refresh
@@ -14,8 +18,8 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     //else{
-      //refresh=localStorage.getItem("refresh")
-      //refreshToken()
+    //refresh=localStorage.getItem("refresh")
+    //refreshToken()
     //}
     return config;
   },
@@ -35,7 +39,9 @@ api.interceptors.response.use(
           refresh: refreshToken,
         });
         localStorage.setItem("accessToken", response.data.access);
-        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
+        api.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.access}`;
         return api(originalRequest);
       } catch (err) {
         localStorage.clear();
@@ -47,7 +53,7 @@ api.interceptors.response.use(
 );
 
 //const refreshToken=()=>{
-  //access=localStorage.get("access")
+//access=localStorage.get("access")
 //}
 
 export default api;
