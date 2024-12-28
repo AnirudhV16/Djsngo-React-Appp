@@ -5,9 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import api from "../api/axios";
 
+const api_url = "/choreo-apis/djangoreact/backend/v1";
 const Navbar = ({ showContainer, setShowContainer, img }) => {
   const isAuthenticated = !!localStorage.getItem("token"); // Check if user is logged in
-  const baseUrl = "http://127.0.0.1:8000";
+  const baseUrl = import.meta.env.VITE_API_URL
+    ? import.meta.env.VITE_API_URL
+    : api_url;
   const fullImageUrl = `${baseUrl}${img}`;
   console.log(`urll:${fullImageUrl}`);
 
