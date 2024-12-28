@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "./Navbar";
-import Prof from "./prof";
 
 const Order = ({ showContainer, setShowContainer }) => {
   const [orders, setOrders] = useState([]);
@@ -47,7 +45,6 @@ const Order = ({ showContainer, setShowContainer }) => {
 
   return (
     <>
-      {/*<Prof showContainer={showContainer} />*/}
       <div>
         {/*<button onClick={handlePlaceOrder}>Place Order</button>*/}
         <ul className="orders-container">

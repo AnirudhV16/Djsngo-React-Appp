@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import Categories from "../components/Categories";
 import MenuList from "../components/MenuList";
-import Navbar from "../components/Navbar";
-import Prof from "../components/Prof";
 
 const Home = ({ showContainer, setShowContainer }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
