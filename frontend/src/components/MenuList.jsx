@@ -31,11 +31,12 @@ const MenuList = ({ categoryId }) => {
     });
   };
   const imageurl = (imgg) => {
-    const url = imgg.image;
+    // Ensure that imgg.image is a string
+    const url = imgg?.image || ""; // Safely access image, fallback to empty string
     const parts = url.split("/"); // Split the string by "/"
-    const lastPart = parts[parts.length - 1]; // Get the last part
-    console.log(lastPart); // Output: kirito.jpg
-    return `${baseUrl}${imgs_path}${lastPart}`;
+    const lastPart = parts[parts.length - 1]; // Get the last part (filename)
+    console.log(lastPart); // Output: ioana-tabarcea-mxwEAI4pTGU-unsplash.jpg
+    return `${baseUrl}${imgs_path}${lastPart}`; // Return the full URL
   };
 
   return (
