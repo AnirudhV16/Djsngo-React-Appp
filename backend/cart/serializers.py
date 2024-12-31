@@ -8,6 +8,7 @@ class CartSerializer(serializers.ModelSerializer):
         fields="__all__"
 
 class CartItemSerializer(serializers.ModelSerializer):
+    item = MenuItemSerializer()
     class Meta:
         model = CartItem
         fields = "__all__"  # Includes all fields in the model
