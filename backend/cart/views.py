@@ -59,6 +59,6 @@ class CartItemsListView(ListAPIView):
         try:
             cart = Cart.objects.get(user=self.request.user)
             #items=cart.items.all()
-            return CartItem.objects.filter(cart_id=cart.id)
+            return CartItem.objects.filter(cart_id=cart.id).select_related('item')
         except Cart.DoesNotExist:
             return CartItem.objects.none()  # Return an empty queryset if no cart exists
