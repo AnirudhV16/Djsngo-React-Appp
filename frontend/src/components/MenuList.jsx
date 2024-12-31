@@ -35,7 +35,9 @@ const MenuList = ({ categoryId }) => {
     const url = imgg?.image || ""; // Safely access image, fallback to empty string
     const parts = url.split("/"); // Split the string by "/"
     const lastPart = parts[parts.length - 1]; // Get the last part (filename)
-    console.log(lastPart); // Output: ioana-tabarcea-mxwEAI4pTGU-unsplash.jpg
+    console.log(`"latpart":${lastPart}`); // Output: ioana-tabarcea-mxwEAI4pTGU-unsplash.jpg
+    console.log(`complete url: ${baseUrl}${imgs_path}${lastPart}`);
+
     return `${baseUrl}${imgs_path}${lastPart}`; // Return the full URL
   };
 
