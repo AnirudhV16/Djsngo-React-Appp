@@ -5,7 +5,7 @@ import api from "../api/axios";
 import Counter from "./Counter";
 
 const api_url = "/choreo-apis/djangoreact/backend/v1";
-const imgs_path = "/media/media/menu_images";
+const imgs_path = "/media/media/menu_images/";
 const baseUrl = import.meta.env.VITE_API_URL
   ? import.meta.env.VITE_API_URL
   : api_url;
@@ -32,7 +32,7 @@ const MenuList = ({ categoryId }) => {
   };
   const imageurl = (imgg) => {
     // Ensure that imgg.image is a string
-    const url = imgg?.image || ""; // Safely access image, fallback to empty string
+    const url = String(imgg?.image) || ""; // Safely access image, fallback to empty string
     const parts = url.split("/"); // Split the string by "/"
     const lastPart = parts[parts.length - 1]; // Get the last part (filename)
     console.log(`"latpart":${lastPart}`); // Output: ioana-tabarcea-mxwEAI4pTGU-unsplash.jpg
